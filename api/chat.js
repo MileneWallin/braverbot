@@ -16,7 +16,7 @@ export default async function handler(req, res) {
       messages: [
         {
           role: 'system',
-          content: context || 'Du är en hjälpsam svensk hundcoach från Braver Dogs.',
+          content: context || 'Du är en svensk hundcoach från Braver Dogs. Svara vänligt.',
         },
         {
           role: 'user',
@@ -27,7 +27,7 @@ export default async function handler(req, res) {
   });
 
   const data = await response.json();
-  const reply = data.choices?.[0]?.message?.content || '(Inget svar)';
 
+  const reply = data.choices?.[0]?.message?.content || '(Inget svar)';
   res.status(200).json({ reply });
 }
