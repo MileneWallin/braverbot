@@ -16,7 +16,7 @@ export default async function handler(req, res) {
       messages: [
         {
           role: 'system',
-          content: context || 'Du är en vänlig hundcoach från Braver Dogs.',
+          content: context || 'Du är en vänlig svensk hundcoach från Braver Dogs.',
         },
         {
           role: 'user',
