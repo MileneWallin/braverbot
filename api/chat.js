@@ -1,11 +1,9 @@
-// /api/chat.js
-
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ message: 'Endast POST tillåts' });
   }
 
-  const { message } = req.body;
+  const { message, context } = req.body;
 
   const response = await fetch('https://api.openai.com/v1/chat/completions', {
     method: 'POST',
@@ -18,7 +16,7 @@ export default async function handler(req, res) {
       messages: [
         {
           role: 'system',
-          content: 'Du är BraverBot – en vänlig, svensk hundcoach som hjälper användare att förstå Braver Dogs kurser och medlemskap. Svara tydligt och varmt.',
+          content: context || 'Du är en hjälpsam svensk hundcoach från Braver Dogs.',
         },
         {
           role: 'user',
