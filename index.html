@@ -1,0 +1,52 @@
+
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <title>BraverBot</title>
+  <style>
+    body { font-family: sans-serif; max-width: 600px; margin: 40px auto; }
+    .chat-box { border: 1px solid #ccc; padding: 20px; height: 400px; overflow-y: auto; background: #f9f9f9; }
+    .user-msg, .bot-msg { margin: 10px 0; }
+    .user-msg { font-weight: bold; }
+    input[type="text"] { width: 80%; padding: 10px; }
+    button { padding: 10px 15px; }
+  </style>
+</head>
+<body>
+
+  <h1>🐾 Fråga BraverBot</h1>
+  <div class="chat-box" id="chat"></div>
+
+  <input type="text" id="userInput" placeholder="Ställ en fråga..." />
+  <button onclick="sendMessage()">Skicka</button>
+
+  <script>
+    const API_KEY = ""; // <-- Här klistrar du in din API-nyckel som miljövariabel i Vercel
+
+    async function sendMessage() {
+      const input = document.getElementById("userInput");
+      const message = input.value;
+      if (!message) return;
+
+      const chat = document.getElementById("chat");
+      chat.innerHTML += `<div class="user-msg">🐶 Du: ${message}</div>`;
+      input.value = "";
+
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ message })
+      });
+
+      const data = await response.json();
+      const reply = data.reply;
+      chat.innerHTML += `<div class="bot-msg">🤖 BraverBot: ${reply}</div>`;
+      chat.scrollTop = chat.scrollHeight;
+    }
+  </script>
+
+</body>
+</html>
